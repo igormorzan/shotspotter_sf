@@ -11,7 +11,7 @@ library(tidyverse)
 library(readr)
 library(tigris)
 
-data <- read.csv("San_Francisco_ShotSpotter.csv")
+data <- read.csv("http://justicetechlab.org/wp-content/uploads/2018/05/San_Francisco_ShotSpotter.csv")
 ```
 
 ## R Markdown
