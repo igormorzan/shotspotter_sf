@@ -15,6 +15,7 @@ library(tigris)
 library(lubridate)
 library(gganimate)
 library(ggthemes)
+library(transformr)
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
