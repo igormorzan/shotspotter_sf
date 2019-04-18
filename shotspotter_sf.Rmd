@@ -9,10 +9,40 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readr)
+library(sf)
+library(stringr)
 library(tigris)
-
-data <- read.csv("http://justicetechlab.org/wp-content/uploads/2018/05/San_Francisco_ShotSpotter.csv")
+library(lubridate)
+library(gganimate)
+library(ggthemes)
 ```
 
-## R Markdown
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+data <- read_csv("http://justicetechlab.org/wp-content/uploads/2018/05/San_Francisco_ShotSpotter.csv")
+
+shapes <- urban_areas(class = "sf") %>%
+  filter(NAME10 == "San Francisco--Oakland, CA")
+```
+
+```{r echo=FALSE}
+
+shots_fired <- data %>%
+  mutate(Date = dmy(Date)) %>%
+  filter(Type == "Multiple_Gunshots")
+
+shot_locations <- st_as_sf(shots_fired, 
+                            coords = c("Longitude", "Latitude"), 
+                            crs = 4326)
+```
+
+```{r}
+
+ggplot(shapes) + 
+  geom_sf() +
+  geom_sf(data = shot_locations, 
+          mapping = aes(color = "Rnds"), show.legend = "point") + 
+  theme_map() +
+  transition_states(Date)
+
+```
 
