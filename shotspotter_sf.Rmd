@@ -16,6 +16,7 @@ library(lubridate)
 library(gganimate)
 library(ggthemes)
 library(transformr)
+library(png)
 
 # Loading the relevant libraries!
 ```
@@ -32,9 +33,6 @@ shots_fired <- data %>%
   mutate(Date = dmy(Date)) %>%
   mutate(by_month = format(as.Date(Date), "%Y-%m")) %>%
   filter(Type == "Multiple_Gunshots")
-  # filter(Latitude >= 37.71) %>%
-  # filter(Latitude <= 37.75) %>%
-  # filter(Longitude <= -122.37)
 
 shot_locations <- st_as_sf(shots_fired, 
                             coords = c("Longitude", "Latitude"), 
@@ -47,8 +45,8 @@ plot <- ggplot(shapes) +
   geom_sf(data = shot_locations, 
           mapping = aes(color = Rnds), show.legend = "point") + 
   theme_map() +
-  coord_sf(xlim = c(-122.54, -122.34), ylim = c(37.7, 37.8)) +
-  transition_states(by_month) +
+  guides(fill = guide_legend(title = "Rounds Fired")) +
+  coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.57, 37.82)) +
   labs(title = "Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
        subtitle = "Now displaying month: {closest_state}", 
        caption = "Source: Shotspotter Data/Justice Tech Lab") +
@@ -58,6 +56,26 @@ animate(plot, fps = 1)
 
 # It was only doing 2013 so i decided to go by month
 # Interesting fact: the number jumps up on Independence Day
+```
+
+```{r gif}
+outfile <- tempfile(fileext = '.gif')
+
+plot <- ggplot(shapes) + 
+  geom_sf() +
+  geom_sf(data = shot_locations, 
+          mapping = aes(color = Rnds), show.legend = "point") + 
+  theme_map() +
+  guides(fill = guide_legend(title = "Rounds Fired")) +
+  coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.57, 37.82)) +
+  labs(title = "Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
+       subtitle = "Now displaying month: {closest_state}", 
+       caption = "Source: Shotspotter Data/Justice Tech Lab") +
+  scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red")
+
+anim_save("shotspotter_sf.R/sf.gif")
+
+list(src = "shotspotter_sf.R/sf.gif", contentType = 'image/gif')
 
 ```
 

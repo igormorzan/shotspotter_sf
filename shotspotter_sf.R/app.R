@@ -8,10 +8,9 @@
 #
 
 library(shiny)
-library(shinythemes)
 
-# Define UI with cool theme
-ui <- fluidPage(theme = shinytheme("darkly"), tabsetPanel(
+# Define UI for application that draws a histogram
+ui <- fluidPage(tabsetPanel(
   
   tabPanel(
    
@@ -21,7 +20,7 @@ ui <- fluidPage(theme = shinytheme("darkly"), tabsetPanel(
    # Sidebar with a brief explanation of the plot 
    sidebarLayout(
       sidebarPanel(
-        div(style="text-align:left","This plot shows incidents of",br(), "multiple gunshots",br(),
+        div(style="text-align:center","This plot shows incidents of",br(), "multiple gunshots",br(),
             "detected by the ShotSpotter",br(),"program in San Francisco.")
       ),
       
