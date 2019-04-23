@@ -15,32 +15,32 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                 
                 tabsetPanel(
                   
-                  tabPanel(
+                  tabPanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
+                           
                     
                     # Application title
-                    titlePanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)"),
+                   
                     
                     # Sidebar with a brief explanation of the plot 
-                    sidebarLayout(
-                      sidebarPanel(
-                        div("This plot shows incidents of multiple gunshots detected by the ShotSpotter program in San Francisco.")
-                      )
-                    ),      
+                    # sidebarLayout(
+                    #   sidebarPanel(
+                    #     div("This plot shows incidents of multiple gunshots detected by the ShotSpotter program in San Francisco.")
+                    #   )
+                    # ),      
                     # Show a plot of the generated distribution
                     mainPanel(
-                      width = 7,
-                      imageOutput("map_sf")
-                    )
-                  ),
+                      imageOutput("img")
+                    )),
+                  # ),
                   
                   tabPanel("About", textOutput("message"))
-                  
                 ))
+                
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-  output$map_sf <- renderImage({
+  output$img <- renderImage({
     list(src = "sf.gif",
          contentType = "image/gif")
   }, 
