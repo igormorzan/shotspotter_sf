@@ -8,43 +8,51 @@
 #
 
 library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(readr)
+library(sf)
+library(stringr)
+library(tigris)
+library(lubridate)
+library(gganimate)
+library(ggthemes)
+library(transformr)
+library(png)
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(tabsetPanel(
-  
-  tabPanel(
-   
-   # Application title
-   titlePanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)"),
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(
-      sidebarPanel(
-        div(style="text-align:center","This plot shows incidents of",br(), "multiple gunshots",br(),
-            "detected by the ShotSpotter",br(),"program in San Francisco.")
-      ),
-      
-      # Show a plot of the generated distribution
-      mainPanel(
-         plotOutput("distPlot")
-      )
-   )
-)
-))
+ui <- fluidPage(theme = shinytheme("darkly"),
+                
+                tabsetPanel(
+                  
+                  tabPanel("Plot",
+                    
+                    # Application title
+                    titlePanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)"),
+                    # Show a plot of the generated distribution
+                    mainPanel(
+                      width = 7,
+                      imageOutput("map_sf")
+                    )
+                  ),
+                  
+                  tabPanel("About", textOutput("message"))
+                ))
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-   
-   output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-   })
-}
+  
+  output$map_sf <- renderImage({
+    list(src = "sf.gif",
+         contentType = "image/gif")
+  }, 
+  deleteFile = FALSE)
+  
+  output$message <- renderText({"This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.
+    Our code for this project can be found at https://github.com/imorzan/shotspotter_sf."
+  })
+  
+  }
 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
