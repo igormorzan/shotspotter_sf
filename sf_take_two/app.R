@@ -11,27 +11,19 @@ library(shiny)
 library(shinythemes)
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(theme = shinytheme("darkly"),
+ui <- fluidPage(theme = shinytheme("journal"),
                 
                 tabsetPanel(
                   
-                  tabPanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
-                           
-                    
-                    # Application title
-                   
-                    
-                    # Sidebar with a brief explanation of the plot 
-                    # sidebarLayout(
-                    #   sidebarPanel(
-                    #     div("This plot shows incidents of multiple gunshots detected by the ShotSpotter program in San Francisco.")
-                    #   )
-                    # ),      
-                    # Show a plot of the generated distribution
+                  tabPanel("Plot",
+
                     mainPanel(
-                      imageOutput("img")
-                    )),
-                  # ),
+                      h1("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
+                      imageOutput("img"),
+                      align = "center"
+                    ),
+                    h5("Simone Chu and Igor Morzan",
+                       align = "center"))),
                   
                   tabPanel("About", textOutput("message"))
                 ))
