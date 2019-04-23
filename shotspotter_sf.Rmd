@@ -26,40 +26,85 @@ data <- read_csv("http://justicetechlab.org/wp-content/uploads/2018/05/San_Franc
 
 shapes <- urban_areas(class = "sf") %>%
   filter(NAME10 == "San Francisco--Oakland, CA")
+
+# Downloaded the relevant data and shape files!
 ```
 
 ```{r echo=FALSE, cache = TRUE}
 shots_fired <- data %>%
   mutate(Date = dmy(Date)) %>%
   mutate(by_month = format(as.Date(Date), "%Y-%m")) %>%
-  filter(Type == "Multiple_Gunshots")
+  
+  # We wanted to make a gif that changes by month, so we made a new column with just the 
+  # month and year. 
+  
+  filter(Type == "Multiple_Gunshots") 
+
+  # We were interested in looking at incidents of multiple gunshots, so we filtered for those. 
+  # It was interesting that there was a jump on Independence Day each year -- probably the result
+  # of ShotSpotter detecting fireworks as gunfire.
+
+  # An interesting thing to explore would be whether the single gunshot data contains instances
+  # of other things as well -- perhaps an engine backfiring, or something similar? But that's
+  # a project for another day! 
 
 shot_locations <- st_as_sf(shots_fired, 
                             coords = c("Longitude", "Latitude"), 
                             crs = 4326)
+  # Turned it into shapefiles! 
+
 ```
 
 ```{r cache = TRUE}
 plot <- ggplot(shapes) + 
   geom_sf() +
+  
+  # This creates the map that we'll plot our points on. 
+  
   geom_sf(data = shot_locations, 
           mapping = aes(color = Rnds), show.legend = "point") + 
+  
+  # We chose to have color change based on the number of rounds fired so that we could display 
+  # more information in each frame. 
+  
+  # After watching the gif load, it was cool to see that 20 rounds or more were very uncommon
+  # occurrences, just from the colors. 
+  
   theme_map() +
+  
+  # This gives us the cool map look. 
+  
   guides(fill = guide_legend(title = "Rounds Fired")) +
+  
+  # "Rnds" isn't the best legend title, so we changed it here. 
+  
   coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.57, 37.82)) +
+  
+  # We changed the zoom of the map; before, it was way too zoomed out, and you couldn't see 
+  # the points easily. 
+  
   labs(title = "Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
        subtitle = "Now displaying month: {closest_state}", 
        caption = "Source: Shotspotter Data/Justice Tech Lab") +
+  
+  # We gave a relevant title, and made sure that it would be easy for viewers to see what
+  # point in time was being displayed on the gif with the "{closest_state}" feature. 
+  
   scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red")
+
+  # The default colors were shades of blue, which, while nice, didn't have as much contrast 
+  # as these reds. 
 
 animate(plot, fps = 1)
 
-# It was only doing 2013 so i decided to go by month
-# Interesting fact: the number jumps up on Independence Day
+  # Originally, the gif was moving at the speed of light, so we changed the framerate.  
+
 ```
 
 ```{r gif}
 outfile <- tempfile(fileext = '.gif')
+
+# We want a .gif file, so a .gif file we shall make! 
 
 plot <- ggplot(shapes) + 
   geom_sf() +
@@ -73,7 +118,15 @@ plot <- ggplot(shapes) +
        caption = "Source: Shotspotter Data/Justice Tech Lab") +
   scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red")
 
+# Copied the relevant code to make the gif with. 
+
 anim_save("sf_take_two/sf.gif")
+
+# Our folder is called "sf_take_two" because we wound up having to make another directory.
+# For some reason, our first failed to produce a shiny app object whenever we tried to run it,
+# but pasting in the exact same code into a different directory was fine. 
+
+# It was odd, but whatever works, we guess!
 
 list(src = "sf_take_two/sf.gif", contentType = 'image/gif')
 

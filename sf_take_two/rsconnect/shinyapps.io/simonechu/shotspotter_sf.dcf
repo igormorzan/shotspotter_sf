@@ -1,0 +1,12 @@
+name: shotspotter_sf
+title: shotspotter_sf
+username:
+account: simonechu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 884304
+bundleId: 2032658
+url: https://simonechu.shinyapps.io/shotspotter_sf/
+when: 1556027478.64214
+asMultiple: FALSE
+asStatic: FALSE
