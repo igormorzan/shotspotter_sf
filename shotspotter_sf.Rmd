@@ -44,12 +44,16 @@ ggplot(shapes) +
   geom_sf(data = shot_locations, 
           mapping = aes(color = Rnds), show.legend = "point") + 
   theme_map() +
-  + guide_legend(title = "Number of Rounds Fired") +
-  coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.55, 37.9)) +
+  # guide_legend(title = "Number of Rounds Fired") +
+  coord_sf(xlim = c(-122.54, -122.34), ylim = c(37.7, 37.8)) +
   transition_states(Date) +
-  labs(title = "Location of Gunfire incidents in San Francisco, CA",
-       subtitle = "Gunfire incidents across 2013 - 2015 in the month: {closest_state}", 
-       caption = "Source: Shotspotter Data/Justice Tech Lab") 
+  labs(title = "Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
+       subtitle = "Now displaying date: {closest_state}", 
+       caption = "Source: Shotspotter Data/Justice Tech Lab") +
+  scale_color_continuous(name="Number of Rounds Fired", low = "#af3131ff", high = "red") +
+  shadow_mark()
+
+# Why is it only doing 2013...?
 
 ```
 
