@@ -73,9 +73,9 @@ plot <- ggplot(shapes) +
        caption = "Source: Shotspotter Data/Justice Tech Lab") +
   scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red")
 
-anim_save("shotspotter_sf.R/sf.gif")
+anim_save("sf_take_two/sf.gif")
 
-list(src = "shotspotter_sf.R/sf.gif", contentType = 'image/gif')
+list(src = "sf_take_two/sf.gif", contentType = 'image/gif')
 
 ```
 
