@@ -25,16 +25,16 @@ ui <- fluidPage(theme = shinytheme("darkly"),
       sidebarPanel(
         div(style="text-align:center","This plot shows incidents of",br(), "multiple gunshots",br(),
             "detected by the ShotSpotter",br(),"program in San Francisco.")
-      ),
-      
+      )
+   ),      
       # Show a plot of the generated distribution
       mainPanel(
         width = 7,
         imageOutput("map_sf")
-      ))
+      )
 ),
 
-  tabPanel("About", textOutput("about"))
+  tabPanel("About", textOutput("message"))
 
 ))
 
@@ -43,14 +43,13 @@ server <- function(input, output) {
    
   output$map_sf <- renderImage({
     list(src = "sf.gif",
-    contentType = "image/gif", 
+    contentType = "image/gif")
+    }, 
     deleteFile = FALSE)
-
-  })   
   
-  output$about <- renderText("This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.",
-    "Our code for this project can be found at https://github.com/imorzan/shotspotter_sf"
-    )
+  output$message <- renderText({"This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.
+    Our code for this project can be found at https://github.com/imorzan/shotspotter_sf."
+    })
    
 }
 
