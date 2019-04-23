@@ -44,12 +44,12 @@ ggplot(shapes) +
   geom_sf(data = shot_locations, 
           mapping = aes(color = Rnds), show.legend = "point") + 
   theme_map() +
-  + guide_legend(title = "Number of Rounds Fired") +
-  coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.55, 37.9)) +
+  guides(fill = guide_legend(title = "Rounds Fired")) +
+  coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.57, 37.82)) +
   transition_states(Date) +
   labs(title = "Location of Gunfire incidents in San Francisco, CA",
-       subtitle = "Gunfire incidents across 2013 - 2015 in the month: {closest_state}", 
-       caption = "Source: Shotspotter Data/Justice Tech Lab") 
+       subtitle = "Gunfire incidents across 2013 - 2015 in the date: {closest_state}", 
+       caption = "Source: Shotspotter Data/Justice Tech Lab")
 
 ```
 
