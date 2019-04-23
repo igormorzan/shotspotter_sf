@@ -8,9 +8,12 @@
 #
 
 library(shiny)
+library(shinythemes)
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(tabsetPanel(
+ui <- fluidPage(theme = shinytheme("darkly"),
+  
+  tabsetPanel(
   
   tabPanel(
    
@@ -27,7 +30,7 @@ ui <- fluidPage(tabsetPanel(
       # Show a plot of the generated distribution
       mainPanel(
         width = 7,
-        imageOutput("plot1")
+        imageOutput("map_sf")
       ))
 ),
 
@@ -38,21 +41,18 @@ ui <- fluidPage(tabsetPanel(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
    
-   output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-   })
+  output$map_sf <- renderImage({list(src = "sf.gif",
+                                    contentType = "image/gif")}, 
+                              deleteFile = FALSE)
    
-   output$message <- renderText(br(),
+  output$about <- renderText(br(),
     "This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.",
     br(),
-    "Our code for this project can be found here:",
+    "Our code for this project can be found at https://github.com/imorzan/shotspotter_sf"
     )
-}
+   
+   }
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)
