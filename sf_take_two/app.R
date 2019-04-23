@@ -10,7 +10,9 @@
 library(shiny)
 library(shinythemes)
 
-# Define UI for application that draws a histogram
+# Define UI for application - we picked a nice theme because themes are cool! 
+# We also gave the tabs their own titles and centered things because that looks clean. 
+
 ui <- fluidPage(theme = shinytheme("journal"),
                 
                 tabsetPanel(
@@ -29,7 +31,8 @@ ui <- fluidPage(theme = shinytheme("journal"),
                 ))
                 
 
-# Define server logic required to draw a histogram
+# Defining server logic
+# We made the gif in our .Rmd file so that the server would load more quickly. 
 server <- function(input, output) {
   
   output$img <- renderImage({
