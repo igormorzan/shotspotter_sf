@@ -52,8 +52,7 @@ plot <- ggplot(shapes) +
   labs(title = "Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
        subtitle = "Now displaying month: {closest_state}", 
        caption = "Source: Shotspotter Data/Justice Tech Lab") +
-  scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red") +
-  shadow_mark() 
+  scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red")
 
 animate(plot, fps = 1)
 
