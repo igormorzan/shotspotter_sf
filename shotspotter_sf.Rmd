@@ -5,7 +5,7 @@ date: "4/18/2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, cache = TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readr)
@@ -18,32 +18,38 @@ library(ggthemes)
 library(transformr)
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE, cache = TRUE}
 data <- read_csv("http://justicetechlab.org/wp-content/uploads/2018/05/San_Francisco_ShotSpotter.csv")
 
 shapes <- urban_areas(class = "sf") %>%
   filter(NAME10 == "San Francisco--Oakland, CA")
 ```
 
-```{r echo=FALSE}
-
+```{r echo=FALSE, cache = TRUE}
 shots_fired <- data %>%
   mutate(Date = dmy(Date)) %>%
   filter(Type == "Multiple_Gunshots")
+  # filter(Latitude >= 37.71) %>%
+  # filter(Latitude <= 37.75) %>%
+  # filter(Longitude <= -122.37)
 
 shot_locations <- st_as_sf(shots_fired, 
                             coords = c("Longitude", "Latitude"), 
                             crs = 4326)
 ```
 
-```{r}
-
+```{r cache = TRUE}
 ggplot(shapes) + 
   geom_sf() +
   geom_sf(data = shot_locations, 
-          mapping = aes(color = "Rnds"), show.legend = "point") + 
+          mapping = aes(color = Rnds), show.legend = "point") + 
   theme_map() +
-  transition_states(Date)
+  + guide_legend(title = "Number of Rounds Fired") +
+  coord_sf(xlim = c(-122.57, -122.34), ylim = c(37.55, 37.9)) +
+  transition_states(Date) +
+  labs(title = "Location of Gunfire incidents in San Francisco, CA",
+       subtitle = "Gunfire incidents across 2013 - 2015 in the month: {closest_state}", 
+       caption = "Source: Shotspotter Data/Justice Tech Lab") 
 
 ```
 
