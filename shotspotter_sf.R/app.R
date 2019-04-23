@@ -45,9 +45,7 @@ server <- function(input, output) {
                                     contentType = "image/gif")}, 
                               deleteFile = FALSE)
    
-  output$about <- renderText(br(),
-    "This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.",
-    br(),
+  output$about <- renderText("This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.",
     "Our code for this project can be found at https://github.com/imorzan/shotspotter_sf"
     )
    
