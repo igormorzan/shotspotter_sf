@@ -30,8 +30,8 @@ shapes <- urban_areas(class = "sf") %>%
 ```{r echo=FALSE, cache = TRUE}
 shots_fired <- data %>%
   mutate(Date = dmy(Date)) %>%
-  mutate(by_month = format(as.Date(Date), "%Y-%m"))
-  # filter(Type == "Multiple_Gunshots")
+  mutate(by_month = format(as.Date(Date), "%Y-%m")) %>%
+  filter(Type == "Multiple_Gunshots")
   # filter(Latitude >= 37.71) %>%
   # filter(Latitude <= 37.75) %>%
   # filter(Longitude <= -122.37)
@@ -42,7 +42,7 @@ shot_locations <- st_as_sf(shots_fired,
 ```
 
 ```{r cache = TRUE}
-ggplot(shapes) + 
+plot <- ggplot(shapes) + 
   geom_sf() +
   geom_sf(data = shot_locations, 
           mapping = aes(color = Rnds), show.legend = "point") + 
@@ -52,8 +52,10 @@ ggplot(shapes) +
   labs(title = "Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)",
        subtitle = "Now displaying month: {closest_state}", 
        caption = "Source: Shotspotter Data/Justice Tech Lab") +
-  scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red") 
-  # shadow_mark() <- This is the thing that keeps old ones, but it looked a little crowded
+  scale_color_gradient(name="Number of Rounds Fired", low = "#4D0835", high = "red") +
+  shadow_mark() 
+
+animate(plot, fps = 1)
 
 # It was only doing 2013 so i decided to go by month
 # Interesting fact: the number jumps up on Independence Day

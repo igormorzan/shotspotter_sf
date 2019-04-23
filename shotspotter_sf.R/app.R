@@ -11,25 +11,17 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(tabsetPanel(
- 
-  tabPanel("Plot",
-            
-  titlePanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)"),
-   
-   
-)
+  
+  tabPanel(
    
    # Application title
-   titlePanel("Old Faithful Geyser Data"),
+   titlePanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)"),
    
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
       sidebarPanel(
-         sliderInput("bins",
-                     "Number of bins:",
-                     min = 1,
-                     max = 50,
-                     value = 30)
+        div(style="text-align:center","This plot shows incidents of",br(), "multiple gunshots",br(),
+            "detected by the ShotSpotter",br(),"program in San Francisco.")
       ),
       
       # Show a plot of the generated distribution
@@ -38,6 +30,7 @@ ui <- fluidPage(tabsetPanel(
       )
    )
 )
+))
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
