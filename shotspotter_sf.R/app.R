@@ -18,7 +18,7 @@ ui <- fluidPage(theme = shinytheme("darkly"), tabsetPanel(
    # Application title
    titlePanel("Locations of Gunfire incidents in San Francisco, CA (2013 - 2015)"),
    
-   # Sidebar with a slider input for number of bins 
+   # Sidebar with a brief explanation of the plot 
    sidebarLayout(
       sidebarPanel(
         div(style="text-align:left","This plot shows incidents of",br(), "multiple gunshots",br(),
@@ -27,10 +27,13 @@ ui <- fluidPage(theme = shinytheme("darkly"), tabsetPanel(
       
       # Show a plot of the generated distribution
       mainPanel(
-         plotOutput("distPlot")
-      )
-   )
-)
+        width = 7,
+        imageOutput("plot1")
+      ))
+),
+
+  tabPanel("About", textOutput("about"))
+
 ))
 
 # Define server logic required to draw a histogram
@@ -44,6 +47,12 @@ server <- function(input, output) {
       # draw the histogram with the specified number of bins
       hist(x, breaks = bins, col = 'darkgray', border = 'white')
    })
+   
+   output$message <- renderText(br(),
+    "This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.",
+    br(),
+    "Our code for this project can be found here:",
+    )
 }
 
 # Run the application 
