@@ -8,9 +8,10 @@
 #
 
 library(shiny)
+library(shinythemes)
 
-# Define UI for application that draws a histogram
-ui <- fluidPage(tabsetPanel(
+# Define UI with cool theme
+ui <- fluidPage(theme = shinytheme("darkly"), tabsetPanel(
   
   tabPanel(
    
@@ -20,7 +21,7 @@ ui <- fluidPage(tabsetPanel(
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
       sidebarPanel(
-        div(style="text-align:center","This plot shows incidents of",br(), "multiple gunshots",br(),
+        div(style="text-align:left","This plot shows incidents of",br(), "multiple gunshots",br(),
             "detected by the ShotSpotter",br(),"program in San Francisco.")
       ),
       
