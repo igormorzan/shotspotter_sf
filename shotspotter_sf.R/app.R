@@ -41,16 +41,18 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 # Define server logic required to draw a histogram
 server <- function(input, output) {
    
-  output$map_sf <- renderImage({list(src = "sf.gif",
-                                    contentType = "image/gif")}, 
-                              deleteFile = FALSE)
-   
+  output$map_sf <- renderImage({
+    list(src = "sf.gif",
+    contentType = "image/gif", 
+    deleteFile = FALSE)
+
+  })   
+  
   output$about <- renderText("This project was made with data from the ShotSpotter project, thanks to the Justice Tech Lab.",
     "Our code for this project can be found at https://github.com/imorzan/shotspotter_sf"
     )
    
-   }
-
+}
 
 # Run the application 
 shinyApp(ui = ui, server = server)
